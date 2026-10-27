@@ -34,7 +34,10 @@ div.subtitle{
     background: #ffffbb;
 }
 div.mane{
-    margin: 50px 200px 50px 200px;
+    margin-top: 200px;
+    margin-bottom: 200px;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 div.frog{
     width: 40%;
@@ -45,8 +48,10 @@ div.frog{
     display: inline-block;
     vertical-align: top;
     padding: 25px;
-    margin: 45px;
+    margin: 1%;
 }
 div.frog img{
     width: 100%;
+    border: 3px solid #118844;
+    border-radius: 20px;
 }
