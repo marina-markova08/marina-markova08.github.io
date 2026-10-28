@@ -1,17 +1,7 @@
-import { getAuth, signInWithPopup, GithubAuthProvider } from "firebase/auth";
+var admin = require("firebase-admin");
 
-const auth = getAuth();
-const provider = new GithubAuthProvider();
+var serviceAccount = require("path/to/serviceAccountKey.json");
 
-signInWithPopup(auth, provider)
-  .then((result) => {
-    // Авторизация успешна
-    const credential = GithubAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    const user = result.user;
-  })
-  .catch((error) => {
-    // Обработка ошибок
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
