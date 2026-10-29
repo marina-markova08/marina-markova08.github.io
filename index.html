@@ -1,49 +1,65 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="style.css">
-        <script src="script.js">
-        </script>
-    </head>
-    <body>
-        <div>
-            <div class="title">Сайт с жабами!</div>
-            <div class="subtitle">На этом сайте будет много-много жаб</div>
-            <div class="mane">
-                <div class="subtitle">Вот какие жабы тут есть сейчас</div>
-                <div class="row">
-                    <div class="frog">
-                        <img src="https://cs14.pikabu.ru/post_img/big/2022/05/05/1/1651703655174390434.png">
-                        <h1>Жаба в сковородке</h1>
-                        <h3>Посмотрите на прекрасную широкую улыбку этой жабы! А не её блестящия круглые глазки! Она выглядет очень радостной. Вероято потому что её кругленькое тельце идеально вписывается в небольшую сковородочку. Можно сказать, что это воистину идеальное сочетание!</h3>
-                    </div>
-                    <div class="frog">
-                        <img src="https://зоопарк.екатеринбург.рф/upload/resize_cache/iblock/bab/ldvjynno0fflrg19qa2wffxgv9f2sdaq/550_550_1/aga.JPG">
-                        <h1>Жабка на соломке</h1>
-                        <h3>Посмотрите на это маленькое создание! Ей постилили мягкую, свежую соломку и ей на ней очень удобно. Надеюсь каждый сможет найти такое же мягкое, тёплое и удобное место как у этой жабки.</h3>
-                    </div>
+
+<head>
+
+</head>
+
+<body>
+    <div>
+        <div class="title">Сайт с жабами!</div>
+        <div class="subtitle">На этом сайте будет много-много жаб</div>
+        <div class="mane">
+            <div class="subtitle">Вот какие жабы тут есть сейчас</div>
+            <div class="row">
+                <div class="frog">
+                    <img src="https://cs14.pikabu.ru/post_img/big/2022/05/05/1/1651703655174390434.png">
+                    <h1>Жаба в сковородке</h1>
+                    <h3>Посмотрите на прекрасную широкую улыбку этой жабы! А не её блестящия круглые глазки! Она
+                        выглядет очень радостной. Вероято потому что её кругленькое тельце идеально вписывается в
+                        небольшую сковородочку. Можно сказать, что это воистину идеальное сочетание!</h3>
+                </div>
+                <div class="frog">
+                    <img
+                        src="https://зоопарк.екатеринбург.рф/upload/resize_cache/iblock/bab/ldvjynno0fflrg19qa2wffxgv9f2sdaq/550_550_1/aga.JPG">
+                    <h1>Жабка на соломке</h1>
+                    <h3>Посмотрите на это маленькое создание! Ей постилили мягкую, свежую соломку и ей на ней очень
+                        удобно. Надеюсь каждый сможет найти такое же мягкое, тёплое и удобное место как у этой жабки.
+                    </h3>
                 </div>
             </div>
-            <div class="bay-bay">Пока-Пока</div>
-            <div class="bay-bay-img"></div>
         </div>
-        <script type="module">
-            // Import the functions you need from the SDKs you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
-            // TODO: Add SDKs for Firebase products that you want to use
-            // https://firebase.google.com/docs/web/setup#available-libraries
+        <div class="bay-bay">Пока-Пока</div>
+        <div class="bay-bay-img"></div>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
 
-            // Your web app's Firebase configuration
-            const firebaseConfig = {
-                apiKey: "AIzaSyDLyUJ0GmuJJbdUwk1cPYot984AQWDzMi4",
-                authDomain: "jaba-01.firebaseapp.com",
-                projectId: "jaba-01",
-                storageBucket: "jaba-01.firebasestorage.app",
-                messagingSenderId: "582903193533",
-                appId: "1:582903193533:web:a8361f325c45037def3cd4"
-            };
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDLyUJ0GmuJJbdUwk1cPYot984AQWDzMi4",
+            authDomain: "jaba-01.firebaseapp.com",
+            projectId: "jaba-01",
+            storageBucket: "jaba-01.firebasestorage.app",
+            messagingSenderId: "582903193533",
+            appId: "1:582903193533:web:a8361f325c45037def3cd4",
+            databaseURL: "https://jaba-01-default-rtdb.firebaseio.com"
+        };
 
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-          </script>
-    </body>
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        push(ref(db, 'frogs'), {
+            name: "Жаба в сковородке", //будуший input type text
+            description: "Прекрасная широкая улыбка" //будуший input type text
+        });
+       // подрубить  push(ref(db, 'frogs'), { к html форме 
+
+    </script>
+</body>
+
 </html>
