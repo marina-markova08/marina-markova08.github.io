@@ -71,6 +71,7 @@ logoutBtn.addEventListener("click", async () => {
 
 // Отслеживание состояния пользователя
 onAuthStateChanged(auth, (user) => {
+  console.log("Статус авторизации изменился! Пользователь:", user);
   if (user) {
     saveUserToDatabase(user);
     
