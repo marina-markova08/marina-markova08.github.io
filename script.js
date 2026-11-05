@@ -1,6 +1,6 @@
 // Импортируем необходимые модули Firebase через CDN
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, signInWithPopup, signOut, onAuthStateChanged, GithubAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getAuth, signInWithPopup, signOut, onAuthStateChanged, GithubAuthProvider, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 // Конфигурация для вашего проекта jaba-01
 const firebaseConfig = {
@@ -11,6 +11,8 @@ const firebaseConfig = {
   messagingSenderId: "582903193533",
   appId: "1:582903193533:web:a8361f325c45037def3cd4" // Получите в настройках проекта в консоли
 };
+const googleProvider = new GoogleAuthProvider();
+const googleLoginBtn = document.getElementById("googleLoginBtn");
 
 // Инициализация Firebase
 const app = initializeApp(firebaseConfig);
@@ -32,6 +34,15 @@ loginBtn.addEventListener("click", async () => {
     userInfo.innerText = "Ошибка входа: " + error.message;
   }
 });
+googleLoginBtn.addEventListener("click", async () => {
+  try {
+    userInfo.innerText = "Вход...";
+    await signInWithPopup(auth, googleProvider);
+  } catch (error) {
+    console.error("Ошибка:", error);
+    userInfo.innerText = "Ошибка входа: " + error.message;
+  }
+});
 
 // Обработчик кнопки выхода
 logoutBtn.addEventListener("click", async () => {
@@ -41,18 +52,18 @@ logoutBtn.addEventListener("click", async () => {
 // Отслеживание состояния пользователя
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    // Пользователь вошел
     userInfo.innerHTML = `
       <h3>Добро пожаловать, ${user.displayName || "Пользователь"}!</h3>
       <p>Email: ${user.email || "Скрыт"}</p>
       <img src="${user.photoURL}" width="100" alt="Аватар">
     `;
     loginBtn.style.display = "none";
+    googleLoginBtn.style.display = "none"; // Скрываем Google кнопку
     logoutBtn.style.display = "inline-block";
   } else {
-    // Пользователь вышел
     userInfo.innerHTML = "<p>Вы не авторизованы.</p>";
     loginBtn.style.display = "inline-block";
+    googleLoginBtn.style.display = "inline-block"; // Показываем Google кнопку
     logoutBtn.style.display = "none";
   }
 });
