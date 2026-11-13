@@ -43,7 +43,32 @@ async function saveUserToDatabase(user) {
   }
 }
 
-// Функция для загрузки жаб из базы данных
+// 1. Добавляем функцию автоматического заполнения базы данных (сидинг)
+async function seedFrogsIfEmpty() {
+  const frogsRef = ref(db, 'frogs');
+  try {
+    const snapshot = await get(frogsRef);
+    if (!snapshot.exists()) {
+      console.log("База данных пуста! Записываем начальные данные о жабах...");
+      await set(frogsRef, {
+        jaba1: {
+          title: "Жаба в сковородке",
+          image: "https://cs14.pikabu.ru/post_img/big/2022/05/05/1/1651703655174390434.png",
+          description: "Посмотрите на прекрасную широкую улыбку этой жабы! А на её блестящие круглые глазки! Она выглядит очень радостной."
+        },
+        jaba2: {
+          title: "Жабка на соломке",
+          image: "https://зоопарк.екатеринбург.рф/upload/resize_cache/iblock/bab/ldvjynno0fflrg19qa2wffxgv9f2sdaq/550_550_1/aga.JPG",
+          description: "Посмотрите на это маленькое создание! Ей постелили мягкую, свежую соломку, и ей очень удобно."
+        }
+      });
+    }
+  } catch (error) {
+    console.error("Ошибка при проверке/записи жаб:", error);
+  }
+}
+
+// 2. Функция для загрузки жаб на страницу
 async function loadFrogs() {
   frogsContainer.innerHTML = "Загрузка жаб...";
   try {
@@ -52,7 +77,6 @@ async function loadFrogs() {
     if (snapshot.exists()) {
       const frogsData = snapshot.val();
       let html = "";
-      // Проходимся по каждой жабе в базе данных
       Object.values(frogsData).forEach(frog => {
         html += `
           <div class="frog">
@@ -71,6 +95,33 @@ async function loadFrogs() {
     frogsContainer.innerHTML = "Не удалось загрузить жаб.";
   }
 }
+
+// 3. Обновленный обработчик изменения состояния авторизации
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    saveUserToDatabase(user);
+    
+    // Сначала проверяем/заполняем базу данных, затем выводим данные на экран!
+    await seedFrogsIfEmpty();
+    await loadFrogs();
+    
+    userInfo.innerHTML = `
+      <h3>Добро пожаловать, ${user.displayName || "Пользователь"}!</h3>
+      <img src="${user.photoURL}" width="100" style="border-radius: 50%;">
+    `;
+    
+    loginBtn.style.display = "none";
+    googleLoginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+    maneSection.style.display = "block"; // Показываем блок с жабами
+  } else {
+    userInfo.innerHTML = "<p>Вы не авторизованы.</p>";
+    loginBtn.style.display = "inline-block";
+    googleLoginBtn.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+    maneSection.style.display = "none"; // Скрываем блок
+  }
+});
 
 // Обработчики кнопок входа/выхода
 loginBtn.addEventListener("click", () => signInWithPopup(auth, githubProvider));
@@ -96,6 +147,6 @@ onAuthStateChanged(auth, (user) => {
     loginBtn.style.display = "inline-block";
     googleLoginBtn.style.display = "inline-block";
     logoutBtn.style.display = "none";
-    maneSection.style.display = "none"; // Скрываем блок
+    maneSection.style.display = "none"; // Скрываем блоки
   }
 });
