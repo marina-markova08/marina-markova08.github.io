@@ -81,7 +81,7 @@ async function loadFrogs() {
         html += `
           <div class="frog">
             <img src="${frog.image}" alt="${frog.title}">
-            <h1>${frog.title}</h1>
+            <h1>${frog.name}</h1>
             <h3>${frog.description}</h3>
           </div>
         `;
