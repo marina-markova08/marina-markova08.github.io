@@ -15,6 +15,19 @@
     <div>
         <div class="title">Сайт с жабами!</div>
         <div class="subtitle">На этом сайте будет много-много жаб</div>
+        <div id="authentication">
+            <h1>Авторизация через GitHub</h1>
+    
+            <button id="loginBtn">Войти через GitHub</button>
+            <button id="logoutBtn" style="display: none;">Выйти</button>
+            <button id="googleLoginBtn">Войти через Google</button>
+
+
+            <div id="userInfo">Загрузка...</div>
+
+            <!-- Подключаем наш JS-скрипт как модуль -->
+            <script type="module" src="script.js"></script>
+        </div>
         <div class="mane" id="maneSection" style="display: none;">
             <div class="subtitle">Вот какие жабы тут есть сейчас</div>
             <div class="row" id="frogsContainer">
@@ -38,16 +51,5 @@
         <div class="bay-bay">Пока-Пока</div>
         <div class="bay-bay-img"></div>
     </div>
-    <h1>Авторизация через GitHub</h1>
-    
-    <button id="loginBtn">Войти через GitHub</button>
-    <button id="logoutBtn" style="display: none;">Выйти</button>
-    <button id="googleLoginBtn">Войти через Google</button>
-
-
-    <div id="userInfo">Загрузка...</div>
-
-    <!-- Подключаем наш JS-скрипт как модуль -->
-    <script type="module" src="script.js"></script>
 </body>
 </html>
